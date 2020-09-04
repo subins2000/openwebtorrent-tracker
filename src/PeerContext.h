@@ -14,7 +14,7 @@ namespace owt {
 
 class PeerContext {
 public:
-	uWS::WebSocket<true, true>* ws;
+	uWS::WebSocket<false, true>* ws;
 
 	std::string id;
 
@@ -25,7 +25,7 @@ public:
 		this->id = "";
 	}
 
-	PeerContext(uWS::WebSocket<true, true>* ws, std::string id = "") {
+	PeerContext(uWS::WebSocket<false, true>* ws, std::string id = "") {
 		this->ws = ws;
 		this->id = id;
 	}
@@ -36,7 +36,7 @@ public:
 		this->infoHashes.clear();
 	}
 
-	uWS::WebSocket<true, true>* getWebsocket() {
+	uWS::WebSocket<false, true>* getWebsocket() {
 		return this->ws;
 	}
 
@@ -48,7 +48,7 @@ public:
 		return this->infoHashes;
 	}
 
-	void setWebsocket(uWS::WebSocket<true, true>* ws) {
+	void setWebsocket(uWS::WebSocket<false, true>* ws) {
 		this->ws = ws;
 	}
 

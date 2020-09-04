@@ -60,10 +60,7 @@ public:
 		// TODO: add threads
 		// TODO: add non-ssl app
 
-		uWS::SSLApp({
-			.key_file_name = this->key_file.c_str(),
-			.cert_file_name = this->cert_file.c_str()
-		}).ws<PeerContext>("/*", {
+		uWS::App().ws<PeerContext>("/*", {
 			/* Settings */
 			.compression = uWS::SHARED_COMPRESSOR,
 			.maxPayloadLength = 64 * 1024,
@@ -134,7 +131,7 @@ public:
 
 private:
 
-	void onOpen(uWS::WebSocket<true, true>* ws, uWS::HttpRequest* req) {
+	void onOpen(uWS::WebSocket<false, true>* ws, uWS::HttpRequest* req) {
 		DOUT("CONNECTED");
 
 		this->websocketCount++;
@@ -144,7 +141,7 @@ private:
 		peer->ws = ws;
 	}
 
-	void onMessage(uWS::WebSocket<true, true>* ws, std::string_view message, uWS::OpCode opCode) {
+	void onMessage(uWS::WebSocket<false, true>* ws, std::string_view message, uWS::OpCode opCode) {
 		DOUT("Received:");
 		DOUT(message);
 
@@ -166,7 +163,7 @@ private:
 		}
 	}
 
-	void onClose(uWS::WebSocket<true, true>* ws, int code, std::string_view message) {
+	void onClose(uWS::WebSocket<false, true>* ws, int code, std::string_view message) {
 		DOUT("DISCONNECTED");
 
 		this->websocketCount--;
